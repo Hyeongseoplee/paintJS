@@ -3,12 +3,15 @@ const ctx = canvas.getContext('2d');
 const colors = document.querySelectorAll('.controls__color');
 const rangeControler = document.querySelector('.range');
 const mode = document.querySelector('.fillAndPaintMode');
+const saveBtn = document.querySelector('.saveBtn');
 
 canvas.width = 400;
 canvas.height = 700;
 
-ctx.fillStyle="black";
+ctx.fillStyle="white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = "black";
+ctx.fillStyle="red";
 ctx.lineWidth = 2.5;
 
 let paint = false;
@@ -57,7 +60,7 @@ function draw (){
         }
 
 
-        rangeControler.addEventListener('change', () => {
+        rangeControler.addEventListener('input', () => {
             let currentRange = rangeControler.value;
             ctx.lineWidth = currentRange;
         })
@@ -72,11 +75,20 @@ function draw (){
             }
         }
 
+        function handleSave() {
+            const image = canvas.toDataURL("image/jpeg");
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL();
+            link.download = "PaintJS(💜)"
+            link.click(); // 클릭을 거짓으로 만든다?
+        }
+
         canvas.addEventListener("mousemove", doPainting);
         canvas.addEventListener("mousedown", startPainting);
         canvas.addEventListener("mouseleave", stopPainting);
         canvas.addEventListener("mouseup", stopPainting);
         canvas.addEventListener("click", handleFillColor);
+        saveBtn.addEventListener("click", handleSave);
     } else {
         console.log("canvas-unsupported code here.")
     }
