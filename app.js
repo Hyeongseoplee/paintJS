@@ -1,5 +1,6 @@
 const canvas = document.querySelector('.paint-board');
 const ctx = canvas.getContext('2d');
+const colors = document.querySelectorAll('.controls__color');
 
 ctx.strokeStyle = "black";
 ctx.lineWidth = 2.5;
@@ -23,7 +24,7 @@ function draw (){
                 ctx.stroke();
             } else {
                 ctx.beginPath();
-                ctx.moveTo(x, y);
+                ctx.moveTo(x, y); // 새로운 경로를 만들고 펜을 지정된(x,y) 좌표로 옮긴다 
             }
         }
         
@@ -35,6 +36,12 @@ function draw (){
             paint = false;
         }
 
+        colors.forEach((color) => {
+            let currentColor = color.style.backgroundColor;
+            color.addEventListener('click', () => {
+                ctx.strokeStyle = currentColor;
+            })
+        })
 
         canvas.addEventListener("mousemove", doPainting);
         canvas.addEventListener("mousedown", startPainting);
