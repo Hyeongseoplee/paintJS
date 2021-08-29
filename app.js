@@ -1,6 +1,7 @@
 const canvas = document.querySelector('.paint-board');
 const ctx = canvas.getContext('2d');
 const colors = document.querySelectorAll('.controls__color');
+const rangeControler = document.querySelector('.range');
 
 ctx.strokeStyle = "black";
 ctx.lineWidth = 2.5;
@@ -35,6 +36,11 @@ function draw (){
         function stopPainting() {
             paint = false;
         }
+
+        rangeControler.addEventListener('change', () => {
+            let currentRange = rangeControler.value;
+            ctx.lineWidth = currentRange;
+        })
 
         colors.forEach((color) => {
             let currentColor = color.style.backgroundColor;
